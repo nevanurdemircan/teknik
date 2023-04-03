@@ -1,5 +1,6 @@
 package com.info.teknik.converter;
 
+import com.info.teknik.dto.CustomerMachinePartDetailDto;
 import com.info.teknik.dto.CustomerMachinePartGetAllDto;
 import com.info.teknik.entity.CustomerMachine;
 import org.springframework.stereotype.Component;
@@ -14,4 +15,9 @@ public class CustomerMachinePartConverter {
 
         return dto;
     }
+   public CustomerMachinePartDetailDto entityConvertToCustomerMachinePartDetailDto (CustomerMachine entity){
+        CustomerMachinePartDetailDto dto = new CustomerMachinePartDetailDto();
+        dto.setMachineName(entity.getMachine().getBrand().getName());
+        return dto;
+   }
 }

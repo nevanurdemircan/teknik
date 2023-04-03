@@ -7,6 +7,5 @@ import lombok.Setter;
 @Setter
 public class PartDto {
     private String name;
-
     private Long serviceLife;
 }

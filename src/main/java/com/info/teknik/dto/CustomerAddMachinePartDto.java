@@ -11,9 +11,7 @@ import java.util.UUID;
 public class CustomerAddMachinePartDto {
 
     private UUID customerId;
-
     private UUID machineId;
     private List<UUID> partIds;
-
     private Long counter;
 }

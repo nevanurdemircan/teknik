@@ -2,6 +2,7 @@ package com.info.teknik.service;
 
 import com.info.teknik.converter.CustomerMachinePartConverter;
 import com.info.teknik.dto.CustomerAddMachinePartDto;
+import com.info.teknik.dto.CustomerMachinePartDetailDto;
 import com.info.teknik.dto.CustomerMachinePartGetAllDto;
 import com.info.teknik.entity.Customer;
 import com.info.teknik.entity.CustomerMachine;
@@ -28,19 +29,18 @@ public class CustomerMachinePartService {
 
     private final MachineRepository machineRepository;
 
-
     private final PartRepository partRepository;
 
     private final CustomerMachineRepository customerMachineRepository;
 
     private final CustomerMachinePartConverter converter;
 
-    public ResponseEntity<Void> create (CustomerAddMachinePartDto customerAddMachinePartDto){
+    public ResponseEntity<Void> create(CustomerAddMachinePartDto customerAddMachinePartDto) {
         Optional<Customer> optionalCustomer = customerRepository.findById(customerAddMachinePartDto.getCustomerId());
         Optional<Machine> optionalMachine = machineRepository.findById(customerAddMachinePartDto.getMachineId());
         List<Part> parts = partRepository.findAllById(customerAddMachinePartDto.getPartIds());
 
-        if (optionalCustomer.isEmpty() || optionalMachine.isEmpty()){
+        if (optionalCustomer.isEmpty() || optionalMachine.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
@@ -59,10 +59,10 @@ public class CustomerMachinePartService {
         return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<Void> updateCounter (UUID id, Long counter){
+    public ResponseEntity<Void> updateCounter(UUID id, Long counter) {
         Optional<CustomerMachine> optionalCustomerMachinePart = customerMachineRepository.findById(id);
 
-        if (optionalCustomerMachinePart.isEmpty()){
+        if (optionalCustomerMachinePart.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
@@ -75,17 +75,16 @@ public class CustomerMachinePartService {
         return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<List<CustomerMachinePartGetAllDto>> getAllByCustomerId(UUID customerId){
+    public ResponseEntity<List<CustomerMachinePartGetAllDto>> getAllByCustomerId(UUID customerId) {
         List<CustomerMachine> customerMachineParts = customerMachineRepository.findAllByCustomerId(customerId);
         List<CustomerMachinePartGetAllDto> response = customerMachineParts.stream().map(converter::entityConvertToCustomerMachinePartGetAllDto).collect(Collectors.toList());
 
         return ResponseEntity.ok(response);
     }
 
-    public ResponseEntity<List<CustomerMachinePartGetAllDto>> getDetail(UUID customerId){
+    public ResponseEntity<List<CustomerMachinePartDetailDto>> getDetail(UUID customerId) {
         List<CustomerMachine> customerMachineParts = customerMachineRepository.findAllByCustomerId(customerId);
-
-
-        return ResponseEntity.ok(null);
+        List<CustomerMachinePartDetailDto> response = customerMachineParts.stream().map(converter::entityConvertToCustomerMachinePartDetailDto).collect(Collectors.toList());
+        return ResponseEntity.ok(response);
     }
 }

@@ -7,8 +7,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,11 +18,11 @@ import java.util.List;
 public class CustomerMachine extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "machine_id")
     private Machine machine;
 
     @ManyToMany
