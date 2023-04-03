@@ -19,8 +19,6 @@ public class Part extends BaseEntity {
     @JoinColumn(name = "machine_id")
     private Machine machine;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_machine_part_id")
-     private CustomerMachinePart customerMachinePart;
+
 
 }
