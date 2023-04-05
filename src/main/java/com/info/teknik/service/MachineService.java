@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,42 +28,41 @@ public class MachineService {
 
     private final PartConverter partConverter;
 
-    public ResponseEntity<Void>create(MachineCreateDto machineCreateDto){
+    public ResponseEntity<Void> create(MachineCreateDto machineCreateDto) {
         Machine machine = new Machine();
-
-        List<Part> parts = machineCreateDto.getParts().stream().map(partConverter::partDtoConvertPart).collect(Collectors.toList());
-        parts = partRepository.saveAll(parts);
 
         MachineBrand brand = new MachineBrand();
 
         brand.setId(machineCreateDto.getBrandId());
         machine.setModel(machineCreateDto.getModel());
         machine.setBrand(brand);
-        machine.setParts(parts);
 
-        machineRepository.save(machine);
+        Machine savedMachine = machineRepository.save(machine);
+
+        List<Part> parts = machineCreateDto.getParts().stream().map(partDto -> partConverter.partDtoConvertPart(savedMachine, partDto)).toList();
+        partRepository.saveAll(parts);
 
         return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<List<MachineDto>> getAll(){
+    public ResponseEntity<List<MachineDto>> getAll() {
         List<Machine> result = machineRepository.findAll();
 
-        List<MachineDto> machines = result.stream().map(machineConverter::machineConvertToMachineDto).collect(Collectors.toList());
+        List<MachineDto> machines = result.stream().map(machineConverter::machineConvertToMachineDto).toList();
 
         return ResponseEntity.ok(machines);
     }
 
 
-    public ResponseEntity<Void>delete(UUID id){
+    public ResponseEntity<Void> delete(UUID id) {
         machineRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<MachineDto>findById(UUID id){
+    public ResponseEntity<MachineDto> findById(UUID id) {
         Optional<Machine> optionalMachine = machineRepository.findById(id);
 
-        if (optionalMachine.isEmpty()){
+        if (optionalMachine.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
@@ -72,7 +70,6 @@ public class MachineService {
 
         return ResponseEntity.ok(machine);
     }
-
 
 
 }

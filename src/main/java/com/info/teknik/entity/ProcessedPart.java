@@ -7,17 +7,23 @@ import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
+
 @Entity
 @Getter
 @Setter
-public class CustomerMachinePart extends BaseEntity {
+public class ProcessedPart extends BaseEntity {
+
+    @ManyToOne
+    @JoinColumn(name = "technical_service_id")
+    private TechnicalService technicalService;
+
     @ManyToOne
     @JoinColumn(name = "part_id")
     private Part part;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_machine_id")
-    private CustomerMachine customerMachine;
+    private Long currentCount;
 
-    private Long nextServiceLife;
+    private String process;
+
+    private String description;
 }
