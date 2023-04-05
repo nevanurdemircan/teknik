@@ -21,19 +21,19 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class MachineController {
     private final MachineService machineService;
-    @PostMapping("create")
+    @PostMapping
     public ResponseEntity<Void>create(@RequestBody MachineCreateDto machineCreateDto){
         return machineService.create(machineCreateDto);
     }
-    @GetMapping("All")
+    @GetMapping
     public ResponseEntity<List<MachineDto>>getAll(){
         return machineService.getAll();
     }
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<Void>delete(@PathVariable UUID id){
         return machineService.delete(id);
     }
-    @GetMapping("findById/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<MachineDto>findById(@PathVariable UUID id){
         return machineService.findById(id);
     }

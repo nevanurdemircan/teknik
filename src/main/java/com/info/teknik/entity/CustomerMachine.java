@@ -2,11 +2,9 @@ package com.info.teknik.entity;
 
 import com.info.teknik.entity.base.BaseEntity;
 import jakarta.persistence.Entity;
-
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,13 +23,11 @@ public class CustomerMachine extends BaseEntity {
     @JoinColumn(name = "machine_id")
     private Machine machine;
 
-    @ManyToMany
-    @JoinTable(
-            name = "parts-life",
-            joinColumns = @JoinColumn(name = "customer-machine_id"),
-            inverseJoinColumns = @JoinColumn(name = "part_id"))
-
-    private List<Part> parts;
+    @OneToMany(mappedBy = "customerMachine")
+    private List<CustomerMachinePart> customerMachineParts;
 
     private Long counter;
+
+    @OneToMany(mappedBy = "customerMachine")
+    private List<TechnicalService> technicalServices;
 }

@@ -18,7 +18,4 @@ public class Part extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "machine_id")
     private Machine machine;
-
-
-
 }

@@ -4,6 +4,7 @@ import com.info.teknik.dto.MachineBrandDto;
 import com.info.teknik.service.MachineBrandService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("machine_brand")
+@RequestMapping("machine-brand")
 @RequiredArgsConstructor
 public class MachineBrandController {
     private final MachineBrandService machineBrandService;
@@ -25,7 +26,7 @@ public class MachineBrandController {
         return machineBrandService.create(machineBrandDto);
     }
 
-    @PostMapping("delete/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
         return machineBrandService.delete(id);
     }

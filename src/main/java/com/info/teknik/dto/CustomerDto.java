@@ -7,11 +7,10 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class CustomerMachinePartGetAllDto {
-
+public class CustomerDto {
     private UUID id;
-
-    private String customerName;
-
-    private String machineModel;
+    private String name;
+    private String address;
+    private String phone;
+    private String email;
 }
